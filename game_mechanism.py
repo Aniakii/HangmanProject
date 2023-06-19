@@ -70,6 +70,3 @@ def guess_letter(letter, word_to_guess, guessed_letters):
     else:
         return False
     
-
-# TODO: naprawić wyświetlanie listy z poziomu dodawania i usuwania słów
-# TODO: Dodać do GUI poziomu opis poziomu random
