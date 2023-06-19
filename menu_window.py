@@ -1,11 +1,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from gui_functionality import start_game
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(540, 340)
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
+
+class Ui_MenuWindow(object):
+    def setupUi(self, MenuWindow):
+        MenuWindow.setObjectName("MenuWindow")
+        MenuWindow.setFixedSize(510, 396)
+        self.centralwidget = QtWidgets.QWidget(MenuWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.start_game_button = QtWidgets.QPushButton(self.centralwidget)
         self.start_game_button.setGeometry(QtCore.QRect(190, 90, 151, 41))
@@ -14,48 +14,49 @@ class Ui_MainWindow(object):
         self.add_word_button.setGeometry(QtCore.QRect(190, 140, 151, 41))
         self.add_word_button.setObjectName("add_word_button")
         self.show_words_button = QtWidgets.QPushButton(self.centralwidget)
-        self.show_words_button.setGeometry(QtCore.QRect(190, 190, 151, 41))
+        self.show_words_button.setGeometry(QtCore.QRect(190, 240, 151, 41))
         self.show_words_button.setObjectName("show_words_button")
-        self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(110, 30, 321, 41))
+        self.title_label = QtWidgets.QLabel(self.centralwidget)
+        self.title_label.setGeometry(QtCore.QRect(110, 30, 321, 41))
         font = QtGui.QFont()
         font.setFamily("Poor Richard")
         font.setPointSize(36)
-        self.label.setFont(font)
-        self.label.setObjectName("label")
+        self.title_label.setFont(font)
+        self.title_label.setObjectName("title_label")
         self.exit_button = QtWidgets.QPushButton(self.centralwidget)
-        self.exit_button.setGeometry(QtCore.QRect(190, 240, 151, 41))
+        self.exit_button.setGeometry(QtCore.QRect(190, 290, 151, 41))
         self.exit_button.setObjectName("exit_button")
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 540, 21))
+        self.delete_word_button = QtWidgets.QPushButton(self.centralwidget)
+        self.delete_word_button.setGeometry(QtCore.QRect(190, 190, 151, 41))
+        self.delete_word_button.setObjectName("delete_word_button")
+        MenuWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(MenuWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 510, 21))
         self.menubar.setObjectName("menubar")
-        MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        MenuWindow.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(MenuWindow)
         self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
+        MenuWindow.setStatusBar(self.statusbar)
 
-        self.game_window = None
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.retranslateUi(MenuWindow)
+        QtCore.QMetaObject.connectSlotsByName(MenuWindow)
 
-    def retranslateUi(self, MainWindow):
+    def retranslateUi(self, MenuWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Hangman Game Menu"))
-        self.start_game_button.setText(_translate("MainWindow", "Start a new game"))
-        self.add_word_button.setText(_translate("MainWindow", "Add new word"))
-        self.show_words_button.setText(_translate("MainWindow", "Show all words"))
-        self.label.setText(_translate("MainWindow", "H A N G M A N"))
-        self.exit_button.setText(_translate("MainWindow", "Exit"))
+        MenuWindow.setWindowTitle(_translate("MenuWindow", "Hangman Game Menu"))
+        self.start_game_button.setText(_translate("MenuWindow", "Start a new game"))
+        self.add_word_button.setText(_translate("MenuWindow", "Add new word"))
+        self.show_words_button.setText(_translate("MenuWindow", "Show all words"))
+        self.title_label.setText(_translate("MenuWindow", "H A N G M A N"))
+        self.exit_button.setText(_translate("MenuWindow", "Exit"))
+        self.delete_word_button.setText(_translate("MenuWindow", "Delete word"))
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    ui.start_game_button.clicked.connect(lambda: start_game(MainWindow))
-
-    MainWindow.show()
+    MenuWindow = QtWidgets.QMainWindow()
+    ui = Ui_MenuWindow()
+    ui.setupUi(MenuWindow)
+    MenuWindow.show()
     sys.exit(app.exec_())
