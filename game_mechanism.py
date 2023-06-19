@@ -32,28 +32,21 @@ def get_word(level):
     global words, easy_words, medium_words, hard_words
     word = ""
     if level == Level.EASY.value:
-        print("easy")
         if len(easy_words) > 0:
             random_number = randint(0, len(easy_words)-1)
             word = easy_words[random_number]
     elif level == Level.MEDIUM.value:
-        print("medium")
         if len(medium_words) > 0:
             random_number = randint(0, len(medium_words)-1)
             word = medium_words[random_number]
     elif level == Level.HARD.value:
-        print("hard")
         if len(hard_words) > 0:
             random_number = randint(0, len(hard_words)-1)
             word = hard_words[random_number]
     elif level == Level.RANDOM.value:
-        print("random")
         random_number = randint(0, len(words)-1)
         word = words[random_number]
-    else:
-        print("błąd")
-        
-    print(word)
+
     encrypted_word = (len(word)) * "_"
     return word, encrypted_word
 
