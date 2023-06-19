@@ -54,7 +54,7 @@ class Ui_GameWindow(object):
 
     def retranslateUi(self, Game_Window):
         _translate = QtCore.QCoreApplication.translate
-        Game_Window.setWindowTitle(_translate("Game_Window", "MainWindow"))
+        Game_Window.setWindowTitle(_translate("Game_Window", "Hangman Game"))
         # self.word_browser.setHtml('<html><body><div style="display: flex; height: 100%; align-items: center; justify-content: center;">Your text goes here</div></body></html>')
         self.word_browser.setHtml(_translate("Game_Window", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"

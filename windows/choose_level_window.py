@@ -74,7 +74,7 @@ class Ui_ChooseLevelWindow(object):
 
     def retranslateUi(self, ChooseLevelWindow):
         _translate = QtCore.QCoreApplication.translate
-        ChooseLevelWindow.setWindowTitle(_translate("ChooseLevelWindow", "MainWindow"))
+        ChooseLevelWindow.setWindowTitle(_translate("ChooseLevelWindow", "Hangman Choose Level"))
         self.choose_level_label.setText(_translate("ChooseLevelWindow", "Choose a game level:"))
         self.easy_button.setText(_translate("ChooseLevelWindow", "EASY"))
         self.easy_button.setStyleSheet('QPushButton {color: green;}')
