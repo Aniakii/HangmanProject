@@ -8,7 +8,6 @@ encrypted_word = ""
 mistakes_left = 13
 level = 0
 guessed_letters = []
-used_letters = []
 all_words = []
 easy_words = []
 medium_words = []
@@ -20,7 +19,7 @@ def open_different_window(First_Window, Second_Window):
     Second_Window.show()
 
 def start_game(word_browser, mistakes_browser, hangman_view, Menu_Window, Game_Window,chosen_level=None):
-    global word_to_guess, encrypted_word, guessed_letters, mistakes_left, all_words, used_letters, level
+    global word_to_guess, encrypted_word, guessed_letters, mistakes_left, all_words, level
 
     if chosen_level is None:
         chosen_level = level
@@ -31,7 +30,6 @@ def start_game(word_browser, mistakes_browser, hangman_view, Menu_Window, Game_W
         QMessageBox.critical(word_browser, "BRAK SŁOWA", "W bazie nie ma żadnego słowa, które odpowiadałoby wybranemu poziomowi")
     else:
         guessed_letters = []
-        used_letters = []
         mistakes_left = 13
         level = chosen_level
         display_word(encrypted_word, word_browser)
@@ -61,12 +59,12 @@ def show_picture(hangman_view):
     hangman_view.setPixmap(QPixmap(f"hangman_pictures/hangman{13-mistakes_left}.png"))
 
 def get_guessed_letter(write_letter,hangman_view,mistakes_browser,word_browser):
-    global mistakes_left, encrypted_word, guessed_letters, used_letters
+    global mistakes_left, encrypted_word, guessed_letters
 
     written_letter = write_letter.toPlainText()
     if written_letter == "":
         QMessageBox.critical(write_letter, "NIE PODANO LITERY", "Musisz wpisać literę, aby spróbować odgadnąć hasło.")
-    elif written_letter in used_letters:
+    elif written_letter in guessed_letters:
         QMessageBox.critical(write_letter, "POWTÓRZONA LITERA", "Wpisana litera była już wcześniej podana.")
     elif written_letter.lower() == word_to_guess.lower():
         display_word(written_letter, word_browser)
@@ -74,7 +72,6 @@ def get_guessed_letter(write_letter,hangman_view,mistakes_browser,word_browser):
         message.setStandardButtons(QMessageBox.Ok)
         message.exec()
     else:
-        used_letters.append(written_letter)
         result = guess_letter(written_letter,word_to_guess,guessed_letters)
         if isinstance(result, bool):
             if result:
@@ -94,6 +91,11 @@ def get_guessed_letter(write_letter,hangman_view,mistakes_browser,word_browser):
                 letter = word_to_guess[position]
                 encrypted_word = encrypted_word[:position] + letter + encrypted_word[position + 1:]
             display_word(encrypted_word,word_browser)
+            test = encrypted_word.replace(" ", "")
+            if test.lower() == word_to_guess.lower():
+                message = QMessageBox(QMessageBox.Information,"KONIEC GRY","Brawo, udało Ci się odgadnąć hasło!!!")
+                message.setStandardButtons(QMessageBox.Ok)
+                message.exec()
     write_letter.clear()
 
 def setup_list_view(words_list_view, scroll_widget):

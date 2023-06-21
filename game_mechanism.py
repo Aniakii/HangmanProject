@@ -46,16 +46,17 @@ def get_word(level):
     elif level == Level.RANDOM.value:
         random_number = randint(0, len(words)-1)
         word = words[random_number]
-
     encrypted_word = (len(word)) * "_"
     return word, encrypted_word
 
 
 def guess_letter(letter, word_to_guess, guessed_letters):
+    whole_word = True
     if len(letter) == 0:
         return False
     elif letter.lower() in word_to_guess.lower() and letter not in guessed_letters:
         positions_of_letters = []
+        guessed_letters.append(letter)
         for position, let in enumerate(word_to_guess, start=0):
             if let.lower() == letter.lower():
                 positions_of_letters.append(position)
