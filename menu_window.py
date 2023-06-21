@@ -17,7 +17,7 @@ class Ui_MenuWindow(object):
         self.show_words_button.setGeometry(QtCore.QRect(210, 230, 151, 41))
         self.show_words_button.setObjectName("show_words_button")
         self.title_label = QtWidgets.QLabel(self.centralwidget)
-        self.title_label.setGeometry(QtCore.QRect(130, 20, 321, 41))
+        self.title_label.setGeometry(QtCore.QRect(10, 20, 561, 41))
         font = QtGui.QFont()
         font.setFamily("Poor Richard")
         font.setPointSize(36)
