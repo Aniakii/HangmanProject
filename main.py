@@ -36,9 +36,8 @@ def execute_program():
     Words_List_Window = QtWidgets.QMainWindow()
     ui_words_list = Ui_ListWindow()
     ui_words_list.setupUi(Words_List_Window)
-    setup_list_view(ui_words_list,ui_words_list.words_list_view,ui_words_list.words_verticalScrollBar)
+    setup_list_view(ui_words_list.words_list_view,ui_words_list.words_verticalScrollBar)
 
-    # ui_menu.start_game_button.clicked.connect(lambda: start_game(ui_game.word_browser,ui_game.mistakes_browser,ui_game.hangman_view,Menu_Window, Game_Window))
     ui_menu.start_game_button.clicked.connect(lambda: open_different_window(Menu_Window, Choose_Level_Window))
     ui_menu.add_word_button.clicked.connect(lambda: open_different_window(Menu_Window,Add_Word_Window))
     ui_menu.delete_word_button.clicked.connect(lambda: open_different_window(Menu_Window, Delete_Word_Window))
@@ -52,14 +51,14 @@ def execute_program():
     ui_choose_level.return_to_menu_button.clicked.connect(lambda: open_different_window(Choose_Level_Window, Menu_Window))
 
     ui_add_word.return_button.clicked.connect(lambda: open_different_window(Add_Word_Window,Menu_Window))
-    ui_add_word.add_button.clicked.connect(lambda : add_word(ui_add_word.enter_word_textEdit,ui_words_list,ui_words_list.words_list_view,ui_words_list.words_verticalScrollBar))
+    ui_add_word.add_button.clicked.connect(lambda : add_word(ui_add_word.enter_word_textEdit,ui_words_list.words_list_view,ui_words_list.words_verticalScrollBar))
     
     ui_delete_word.return_button.clicked.connect(lambda: open_different_window(Delete_Word_Window,Menu_Window))
-    ui_delete_word.delete_button.clicked.connect(lambda: delete_word(ui_delete_word.enter_word_textEdit,ui_words_list,ui_words_list.words_list_view,ui_words_list.words_verticalScrollBar))
+    ui_delete_word.delete_button.clicked.connect(lambda: delete_word(ui_delete_word.enter_word_textEdit,ui_words_list.words_list_view,ui_words_list.words_verticalScrollBar))
 
     ui_words_list.return_button.clicked.connect(lambda: open_different_window(Words_List_Window,Menu_Window))
     
-    ui_game.guess_button.clicked.connect(lambda: get_guessed_letter(ui_game.write_letter_textEdit,ui_game.hangman_view,ui_game.mistakes_browser,ui_game.word_browser, Menu_Window, Game_Window))
+    ui_game.guess_button.clicked.connect(lambda: get_guessed_letter(ui_game.write_letter_textEdit,ui_game.hangman_view,ui_game.mistakes_browser,ui_game.word_browser))
     ui_game.reset_game_button.clicked.connect(lambda: start_game(ui_game.word_browser,ui_game.mistakes_browser,ui_game.hangman_view,Menu_Window, Game_Window))
     ui_game.to_menu_button.clicked.connect(lambda: open_different_window(Game_Window,Menu_Window))
     ui_game.exit_button.clicked.connect(lambda: QtWidgets.QApplication.quit())

@@ -4,7 +4,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MenuWindow(object):
     def setupUi(self, MenuWindow):
         MenuWindow.setObjectName("MenuWindow")
-        MenuWindow.resize(510, 396)
+        MenuWindow.setFixedSize(510, 396)
         self.centralwidget = QtWidgets.QWidget(MenuWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.start_game_button = QtWidgets.QPushButton(self.centralwidget)

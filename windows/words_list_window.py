@@ -4,7 +4,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_ListWindow(object):
     def setupUi(self, ListWindow):
         ListWindow.setObjectName("ListWindow")
-        ListWindow.resize(364, 493)
+        ListWindow.setFixedSize(364, 493)
         self.centralwidget = QtWidgets.QWidget(ListWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.words_list_view = QtWidgets.QListView(self.centralwidget)

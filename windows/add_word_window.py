@@ -1,10 +1,9 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-
 class Ui_AddWordWindow(object):
     def setupUi(self, AddWordWindow):
         AddWordWindow.setObjectName("AddWordWindow")
-        AddWordWindow.resize(356, 264)
+        AddWordWindow.setFixedSize(356, 264)
         self.centralwidget = QtWidgets.QWidget(AddWordWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.enter_word_label = QtWidgets.QLabel(self.centralwidget)
@@ -12,14 +11,15 @@ class Ui_AddWordWindow(object):
         font = QtGui.QFont()
         font.setFamily("Poor Richard")
         font.setPointSize(24)
+        self.add_button = QtWidgets.QPushButton(self.centralwidget)
+        self.add_button.setGeometry(QtCore.QRect(50, 180, 111, 31))
+        self.add_button.setObjectName("add_button")
+        self.add_button.setDefault(True)
         self.enter_word_label.setFont(font)
         self.enter_word_label.setObjectName("enter_word_label")
         self.enter_word_textEdit = QtWidgets.QTextEdit(self.centralwidget)
         self.enter_word_textEdit.setGeometry(QtCore.QRect(50, 80, 241, 71))
         self.enter_word_textEdit.setObjectName("enter_word_textEdit")
-        self.add_button = QtWidgets.QPushButton(self.centralwidget)
-        self.add_button.setGeometry(QtCore.QRect(50, 180, 111, 31))
-        self.add_button.setObjectName("add_button")
         self.return_button = QtWidgets.QPushButton(self.centralwidget)
         self.return_button.setGeometry(QtCore.QRect(180, 180, 111, 31))
         self.return_button.setObjectName("return_button")
@@ -46,13 +46,3 @@ class Ui_AddWordWindow(object):
 "<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
         self.add_button.setText(_translate("AddWordWindow", "Add word"))
         self.return_button.setText(_translate("AddWordWindow", "Return to menu"))
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    AddWordWindow = QtWidgets.QMainWindow()
-    ui = Ui_AddWordWindow()
-    ui.setupUi(AddWordWindow)
-    AddWordWindow.show()
-    sys.exit(app.exec_())

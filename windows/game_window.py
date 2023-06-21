@@ -1,21 +1,22 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from gui_functionality import start_game, get_guessed_letter
+from PyQt5.QtWidgets import QMainWindow
 
 class Ui_GameWindow(object):
     def setupUi(self, Game_Window):
         Game_Window.setObjectName("Game_Window")
-        Game_Window.resize(539, 448)
+        Game_Window.setFixedSize(539, 448)
         self.centralwidget = QtWidgets.QWidget(Game_Window)
         self.centralwidget.setObjectName("centralwidget")
         self.word_browser = QtWidgets.QTextBrowser(self.centralwidget)
         self.word_browser.setGeometry(QtCore.QRect(20, 20, 491, 51))
         self.word_browser.setObjectName("word_browser")
-        self.write_letter_textEdit = QtWidgets.QTextEdit(self.centralwidget)
-        self.write_letter_textEdit.setGeometry(QtCore.QRect(20, 320, 121, 41))
-        self.write_letter_textEdit.setObjectName("write_letter_textEdit")
         self.guess_button = QtWidgets.QPushButton(self.centralwidget)
         self.guess_button.setGeometry(QtCore.QRect(20, 370, 121, 23))
         self.guess_button.setObjectName("guess_button")
+        self.guess_button.setDefault(True)
+        self.write_letter_textEdit = QtWidgets.QTextEdit(self.centralwidget)
+        self.write_letter_textEdit.setGeometry(QtCore.QRect(20, 320, 121, 41))
+        self.write_letter_textEdit.setObjectName("write_letter_textEdit")
         self.reset_game_button = QtWidgets.QPushButton(self.centralwidget)
         self.reset_game_button.setGeometry(QtCore.QRect(300, 380, 75, 23))
         self.reset_game_button.setObjectName("reset_game_button")
@@ -87,15 +88,4 @@ class Ui_GameWindow(object):
         vertical-align: middle;
         }
         ''')
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Game_Window = QtWidgets.QMainWindow()
-    ui = Ui_GameWindow()
-    ui.setupUi(Game_Window)
-    start_game(ui.word_browser,ui.mistakes_browser)
-    ui.guess_button.clicked.connect(lambda: get_guessed_letter(ui.write_letter_textEdit,ui.hangman_view,ui.mistakes_browser,ui.word_browser))
-    Game_Window.show()
-    sys.exit(app.exec_())
+    

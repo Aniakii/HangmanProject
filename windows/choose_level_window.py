@@ -4,7 +4,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_ChooseLevelWindow(object):
     def setupUi(self, ChooseLevelWindow):
         ChooseLevelWindow.setObjectName("ChooseLevelWindow")
-        ChooseLevelWindow.resize(512, 370)
+        ChooseLevelWindow.setFixedSize(512, 370)
         self.centralwidget = QtWidgets.QWidget(ChooseLevelWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.choose_level_label = QtWidgets.QLabel(self.centralwidget)

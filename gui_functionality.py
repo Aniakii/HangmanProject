@@ -8,6 +8,7 @@ encrypted_word = ""
 mistakes_left = 13
 level = 0
 guessed_letters = []
+used_letters = []
 all_words = []
 easy_words = []
 medium_words = []
@@ -19,7 +20,7 @@ def open_different_window(First_Window, Second_Window):
     Second_Window.show()
 
 def start_game(word_browser, mistakes_browser, hangman_view, Menu_Window, Game_Window,chosen_level=None):
-    global word_to_guess, encrypted_word, guessed_letters, mistakes_left, all_words, level
+    global word_to_guess, encrypted_word, guessed_letters, mistakes_left, all_words, used_letters, level
 
     if chosen_level is None:
         chosen_level = level
@@ -30,6 +31,7 @@ def start_game(word_browser, mistakes_browser, hangman_view, Menu_Window, Game_W
         QMessageBox.critical(word_browser, "BRAK SŁOWA", "W bazie nie ma żadnego słowa, które odpowiadałoby wybranemu poziomowi")
     else:
         guessed_letters = []
+        used_letters = []
         mistakes_left = 13
         level = chosen_level
         display_word(encrypted_word, word_browser)
@@ -58,18 +60,21 @@ def show_picture(hangman_view):
 
     hangman_view.setPixmap(QPixmap(f"hangman_pictures/hangman{13-mistakes_left}.png"))
 
-def get_guessed_letter(write_letter,hangman_view,mistakes_browser,word_browser, Menu_Window, Game_Window):
-    global mistakes_left, encrypted_word, guessed_letters
+def get_guessed_letter(write_letter,hangman_view,mistakes_browser,word_browser):
+    global mistakes_left, encrypted_word, guessed_letters, used_letters
 
     written_letter = write_letter.toPlainText()
     if written_letter == "":
         QMessageBox.critical(write_letter, "NIE PODANO LITERY", "Musisz wpisać literę, aby spróbować odgadnąć hasło.")
+    elif written_letter in used_letters:
+        QMessageBox.critical(write_letter, "POWTÓRZONA LITERA", "Wpisana litera była już wcześniej podana.")
     elif written_letter.lower() == word_to_guess.lower():
         display_word(written_letter, word_browser)
         message = QMessageBox(QMessageBox.Information,"KONIEC GRY","Brawo, udało Ci się odgadnąć hasło!!!")
         message.setStandardButtons(QMessageBox.Ok)
         message.exec()
     else:
+        used_letters.append(written_letter)
         result = guess_letter(written_letter,word_to_guess,guessed_letters)
         if isinstance(result, bool):
             if result:
@@ -91,7 +96,7 @@ def get_guessed_letter(write_letter,hangman_view,mistakes_browser,word_browser, 
             display_word(encrypted_word,word_browser)
     write_letter.clear()
 
-def setup_list_view(ui, words_list_view, scroll_widget):
+def setup_list_view(words_list_view, scroll_widget):
     global all_words
 
     if words_list_view.model() is None:
@@ -123,44 +128,49 @@ def setup_list_view(ui, words_list_view, scroll_widget):
 
     words_list_view.setVerticalScrollBar(scroll_widget)
 
-def add_word(write_word,ui,words_list_view, scroll_widget):
+def add_word(write_word,words_list_view, scroll_widget):
     global all_words, easy_words, medium_words, hard_words
     written_word = write_word.toPlainText()
     is_correct = True
-    for letter in written_word:
-        if (ord(letter) < 65 or ord(letter) > 122 or (ord(letter) > 90 and ord(letter) < 97)) and (letter not in polish_letters):
-            QMessageBox.critical(write_word, "NIEPRAWIDŁOWY ZNAK", f"We wprowadzonym słowie wykryto nieprawidłowy znak ({letter}). Wpisuj tylko litery.")
-            is_correct = False
-            break 
-    if is_correct:
-        written_word = written_word.upper()
-        if written_word in all_words:
-            QMessageBox.critical(write_word, "POWIELONE SŁOWO", "Wprowadzone słowo znajduje się już w bazie.")
-        else:
-            all_words.append(written_word)
-            all_words.sort()
-            with open("words_base.txt", "w", encoding="utf-8") as file:
-                for word in all_words:
-                    file.write(word+'\n')
-            load_words()
-            if len(written_word) < 6:
-                easy_words.append(word)
-            elif len(written_word) < 11:
-                medium_words.append(word)
+    if written_word == "":
+        QMessageBox.critical(write_word, "BRAK SŁOWA", "Nie wpisano żadnego słowa.")
+    else:
+        for letter in written_word:
+            if (ord(letter) < 65 or ord(letter) > 122 or (ord(letter) > 90 and ord(letter) < 97)) and (letter not in polish_letters):
+                QMessageBox.critical(write_word, "NIEPRAWIDŁOWY ZNAK", f"We wprowadzonym słowie wykryto nieprawidłowy znak ({letter}). Wpisuj tylko litery.")
+                is_correct = False
+                break 
+        if is_correct:
+            written_word = written_word.upper()
+            if written_word in all_words:
+                QMessageBox.critical(write_word, "POWIELONE SŁOWO", "Wprowadzone słowo znajduje się już w bazie.")
             else:
-                hard_words.append(word)
-            words_list_view.model().setStringList(all_words)
-            scroll_widget.setMaximum(words_list_view.model().rowCount() - 1)
-            message = QMessageBox(QMessageBox.Information,"SUKCES","Nowe słowo zostało pomyślnie wprowadzone do bazy.")
-            message.setStandardButtons(QMessageBox.Ok)
-            message.exec()
-            write_word.clear()
+                all_words.append(written_word)
+                all_words.sort()
+                with open("words_base.txt", "w", encoding="utf-8") as file:
+                    for word in all_words:
+                        file.write(word+'\n')
+                load_words()
+                if len(written_word) < 6:
+                    easy_words.append(word)
+                elif len(written_word) < 11:
+                    medium_words.append(word)
+                else:
+                    hard_words.append(word)
+                words_list_view.model().setStringList(all_words)
+                scroll_widget.setMaximum(words_list_view.model().rowCount() - 1)
+                message = QMessageBox(QMessageBox.Information,"SUKCES","Nowe słowo zostało pomyślnie wprowadzone do bazy.")
+                message.setStandardButtons(QMessageBox.Ok)
+                message.exec()
+                write_word.clear()
 
-def delete_word(write_word,ui,words_list_view, scroll_widget):
+def delete_word(write_word,words_list_view, scroll_widget):
     global all_words, easy_words, medium_words, hard_words
     written_word = write_word.toPlainText()
     written_word = written_word.upper()
-    if written_word in all_words:
+    if written_word == "":
+        QMessageBox.critical(write_word, "BRAK SŁOWA", "Nie wpisano żadnego słowa.")
+    elif written_word in all_words:
         all_words.remove(written_word)
         with open("words_base.txt", 'w', encoding="utf-8") as file:
             for word in all_words:
@@ -173,7 +183,6 @@ def delete_word(write_word,ui,words_list_view, scroll_widget):
             hard_words.remove(word)
         words_list_view.model().setStringList(all_words)
         scroll_widget.setMaximum(words_list_view.model().rowCount() - 1)
-        # setup_list_view(ui,words_list_view, scroll_widget)
         message = QMessageBox(QMessageBox.Information,"SUKCES","Pomyślnie usunięto słowo z bazy.")
         message.setStandardButtons(QMessageBox.Ok)
         message.exec()
